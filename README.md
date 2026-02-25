@@ -1,28 +1,70 @@
-# AWS EC2 SSH Access and  IAM Role Setup
+# Automated Secure File Upload from EC2 to S3 storage using IAM Role and Cron Automation
 
-## Overview
-This project documents hands-on work with Amazon EC2, including secure SSH access
-using key pairs and preparing the instance for IAM role-based access
+##  Project Overview
+This project demonstrates how to securely automate file uploads from an Amazon EC2 instance to an Amazon S3 bucket using an IAM Role and Cron Scheduling
+Instead of using hardcoded AWS credentials, the EC2 instance assumes an IAM Role that grants temporary permissions to interact with S3
+Automation is implemented using a bash script combined with Cron Scheduling to simulate automated backups or log uploads
 
-## EC2 SSH Access
--Successfully connected to an Amazon EC2 instance using SSH from powershell
--Authentication was performed using a PEM key file
--Instance login was confirmed without using passwords
+## Architecture
+USer➡️SSH Connection ➡️EC2 Instance ➡️IAM Role (Temporary Credentials) ➡️S3 Bucket
 
-**Key File Used**
--EC2-IAM-labkey.pem
+## Services Used
+Amazon EC2 
+Amazon S3
+IAM Roles
+AWS CLI
+Linux Cron Scheduler
 
-**EC2 Public IPv4**
--18.220.64.24
+## Secure Access Implementation
+Created a private S3 bucket (my-aws-lab-bucket-JohnK)
+Attached an IAM Role to the EC2 instance
+Granted least-Priviledge permission: 's3:PutObject'
 
-## IAM Role
--IAM role created for EC2 service
--Role name 'EC2-S3-Access-Role
--Role will be attached to the EC2 instance to allow secure access to S3
-without hard-coded credentials
-
-## S3 Access Testing (Planned)
--AWS CLI will be used from inside the EC2 instance
--Planned command:
+## Verified Iam Role Credential
+To Confirm that the EC2 instance successfully assumed the IAM Role the Instance Metadata Service was queried using:
 '''bash
-aws s3 ls
+curl http://169.254.169.254/latest/meta-data/iam/security-credentials/
+'''
+
+## Successfully uploaded files using:
+'''bash
+aws s3 cp file1.txt s3://my-aws-lab-bucket-johnk/
+'''
+## Automation Implementation
+Created a bash script that generates dynamic files and uploads them automatically:
+'''bash
+#!/bin/bash
+
+DATE=$(date +%F-%H-%M-%S)
+FILE="backup-$DATE".txt"
+
+echo "Backup created at $Date" > $FILE
+
+aws s3 cp $FILE s3://my-aws-lab-bucket-johnk/
+'''
+Made Script Executable:
+'''bash
+chmod +x upload.sh
+'''
+Automate With Cron:
+'''bash
+crontab -e
+'''
+Added:
+'''bash
+*/5**** /home/ec2-user/upload.sh
+'''
+## Challenges And Troubleshooting
+Resolved "Access Denied" errors by adjusting IAM policy
+Fixed permission issued related to bucket ARN
+Debugged AWS CLI command formatting
+
+## Key Lessons Learned
+IAM Roles are more secure than hardcoding credentials
+Automation reduces manual workload
+Cron enables scheduled cloud tasks
+Proper troubleshooting improves cloud operational skills
+
+
+
+
