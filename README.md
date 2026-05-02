@@ -74,7 +74,7 @@ Proper troubleshooting improves cloud operational skills
 ![Local Files](screenshots/01-ec2-local-files.png)
 
 ### Automation Proof (S3 Upload)
-![Automation](screenshots/02-s3-automation-proof.png)
+![Automation](screenshots/02-S3-automation-proof.png)
 
 
 
