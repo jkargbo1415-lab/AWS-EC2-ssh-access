@@ -68,13 +68,13 @@ Proper troubleshooting improves cloud operational skills
 ## Screenshots
 
 ### EC2 Instance Running
-![EC2 Running] (screenshots/ec2-running.png)
+![EC2 Running](screenshots/ec2-running.png)
 
 ### Local Files on EC2
-![Local Files] (screenshots/01 ec2-local-files.png)
+![Local Files](screenshots/01 ec2-local-files.png)
 
 ### Automation Proof (S3 Upload)
-![Automation] (screenshots/02-s3-automation-proof.png)
+![Automation](screenshots/02-s3-automation-proof.png)
 
 
 
