@@ -1,3 +1,4 @@
+Hands-on AWS Project | EC2 to S3 Secure Automation using IAM Role (No hardcoded credentials)
 # Automated Secure File Upload from EC2 to S3 storage using IAM Role and Cron Automation
 
 ##  Project Overview
@@ -7,7 +8,6 @@ Automation is implemented using a bash script combined with Cron Scheduling to s
 
 ## Architecture
 USer➡️SSH Connection ➡️EC2 Instance ➡️IAM Role (Temporary Credentials) ➡️S3 Bucket
-
 ## Services Used
 Amazon EC2 
 Amazon S3
@@ -25,7 +25,6 @@ To Confirm that the EC2 instance successfully assumed the IAM Role the Instance 
 '''bash
 curl http://169.254.169.254/latest/meta-data/iam/security-credentials/
 '''
-
 ## Successfully uploaded files using:
 '''bash
 aws s3 cp file1.txt s3://my-aws-lab-bucket-johnk/
